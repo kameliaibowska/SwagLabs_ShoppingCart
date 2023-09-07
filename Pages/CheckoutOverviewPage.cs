@@ -39,10 +39,9 @@ namespace SwagLabs_ShoppingCart.Pages
             return products;
         }
 
-
-        public bool IsPaymentInformationLabelDisplayed ()
+        public async Task<bool> IsPaymentInformationLabelDisplayedAsync()
         {
-            return PaymentInformationLabel.Displayed;
+            return await Task.FromResult(PaymentInformationLabel.Displayed);
         }
 
         public string GetPaymentInformation ()
@@ -50,9 +49,9 @@ namespace SwagLabs_ShoppingCart.Pages
             return PaymentInformationValue.Text;
         }
 
-        public bool IsShippingInformationLabelDisplayed ()
+        public async Task<bool> IsShippingInformationLabelDisplayedAsync()
         {
-            return ShippingInformationLabel.Displayed;
+            return await Task.FromResult(ShippingInformationLabel.Displayed);
         }
 
         public string GetShippingInformation()
@@ -60,21 +59,21 @@ namespace SwagLabs_ShoppingCart.Pages
             return ShippingInformationValue.Text;
         }
 
-        public bool IsPriceTotalLabelDisplayed()
+        public bool IsPriceTotalLabelDisplayedAsync()
         {
             return PriceTotalLabel.Displayed;
         }
 
-        public double GetItemTotalValue()
+        public double GetItemTotalValueAsync()
         {
             var itemTotal = ItemTotal.Text.Replace("Item total: $", "").Trim();
             return double.Parse(itemTotal);
         }
 
-        public double GetTaxValue()
+        public async Task<double> GetTaxValueAsync()
         {
             var tax = Tax.Text.Replace("Tax: $", "").Trim();
-            return double.Parse(tax);
+            return await Task.Run(() => double.Parse(tax));
         }
 
         public double GetTotalValue()
@@ -83,9 +82,12 @@ namespace SwagLabs_ShoppingCart.Pages
             return double.Parse(total);
         }
 
-        public void FinishOrder()
+        public async Task FinishOrderAsync()
         {
-            FinishButton.Click();
+            await Task.Run(() =>
+            {
+                FinishButton.Click();
+            });
         }
 
         public void CancelOrder()

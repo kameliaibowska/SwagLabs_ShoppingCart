@@ -22,9 +22,12 @@ namespace SwagLabs_ShoppingCart.Pages
             return cartContent;
         }
 
-        public void GoToShoppingCart()
+        public async Task GoToShoppingCartAsync()
         {
-            ShoppingCart.Click();
+            await Task.Run(() =>
+            {
+                ShoppingCart.Click();
+            });
         }
     }
 }

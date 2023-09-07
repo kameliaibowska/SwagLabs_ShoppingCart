@@ -5,25 +5,25 @@ namespace SwagLabs_ShoppingCart.Tests
     public class CheckoutInformationPageTests : BaseTest, Constants
     {
         private CheckoutInformationPage page;
-        private LoginPage loginPage;
         private ProductsListPage productsListPage;
         private ShoppingCartIconPage shoppingCartIconPage;
         private ShoppingCartPage shoppingCartPage;
         private CheckoutOverviewPage checkoutOverviewPage;
 
-        [SetUp]
-        public void Setup()
+        public CheckoutInformationPageTests(string username, string password) : base(username, password)
         {
-            loginPage = new LoginPage(driver);
+        }
+
+        [SetUp]
+        public new async Task Setup()
+        {
             productsListPage = new ProductsListPage(driver);
             shoppingCartIconPage = new ShoppingCartIconPage(driver);
             shoppingCartPage = new ShoppingCartPage(driver);
             page = new CheckoutInformationPage(driver);
             checkoutOverviewPage = new CheckoutOverviewPage(driver);
 
-            loginPage.Open();
-            loginPage.Login(Constants.ValidUsername, Constants.ValidPassword);
-            NavigateToCheckoutInformationPage();
+            await NavigateToCheckoutInformationPageAsync();
         }
 
         [TestCase(Constants.CheckoutInformationFirstName, 
@@ -32,49 +32,49 @@ namespace SwagLabs_ShoppingCart.Tests
         [TestCase("", Constants.CheckoutInformationLastName, Constants.CheckoutInformationZipCode)]
         [TestCase(Constants.CheckoutInformationFirstName, "", Constants.CheckoutInformationZipCode)]
         [TestCase(Constants.CheckoutInformationFirstName, Constants.CheckoutInformationLastName, "")]
-        public void FillCheckoutInformationFields(string firstName, string lastName, string zipCode)
+        public async Task FillCheckoutInformationFieldsAsync(string firstName, string lastName, string zipCode)
         {
-            page.FieldOutUserInformation(firstName, lastName, zipCode);
-            page.ContinueCheckout();
+            await page.FieldOutUserInformationAsync(firstName, lastName, zipCode);
+            await page.ContinueCheckoutAsync();
 
             if (firstName.Length <= 0)
             {
-                Assert.True(page.CheckoutInformationErrorMessageExist());
+                Assert.That(await page.CheckoutInformationErrorMessageExistAsync(), Is.True);
                 Assert.That(page.GetCheckoutInformationErrorText(),
                     Is.EqualTo(Constants.CheckoutInformationFirstNameErrorMessage));
             }
             else if (lastName.Length <= 0)
             {
-                Assert.True(page.CheckoutInformationErrorMessageExist());
+                Assert.That(await page.CheckoutInformationErrorMessageExistAsync(), Is.True);
                 Assert.That(page.GetCheckoutInformationErrorText(),
                     Is.EqualTo(Constants.CheckoutInformationLastNameErrorMessage));
             }
             else if (zipCode.Length <= 0)
             {
-                Assert.True(page.CheckoutInformationErrorMessageExist());
+                Assert.That(await page.CheckoutInformationErrorMessageExistAsync(), Is.True);
                 Assert.That(page.GetCheckoutInformationErrorText(),
                     Is.EqualTo(Constants.CheckoutInformationZipCodeErrorMessage));
             }
-            else 
+            else
             {
-                Assert.IsTrue(checkoutOverviewPage.IsPageOpen());
+                Assert.That(checkoutOverviewPage.IsPageOpen(), Is.True);
             }
         }
 
-        private void NavigateToCheckoutInformationPage()
+        private async Task NavigateToCheckoutInformationPageAsync()
         {
-            productsListPage.SortProducts(Constants.PriceLowToHigh);
+            await productsListPage.SortProductsAsync(Constants.PriceLowToHigh);
 
             // add first product from the list by price
-            productsListPage.AddRemoveProduct();
-            productsListPage.SortProducts(Constants.NameZtoA);
+            await productsListPage.AddRemoveProductAsync();
+            await productsListPage.SortProductsAsync(Constants.NameZtoA);
 
             // add first product from the list by name
-            productsListPage.AddRemoveProduct();
-            shoppingCartIconPage.GoToShoppingCart();
-            shoppingCartPage.Checkout();
+            await productsListPage.AddRemoveProductAsync();
+            await shoppingCartIconPage.GoToShoppingCartAsync();
+            await shoppingCartPage.CheckoutAsync();
 
-            Assert.IsTrue(page.IsPageOpen());
+            Assert.That(page.IsPageOpen(), Is.True);
             Assert.That(page.CheckPageTitle(), Is.EqualTo(Constants.CheckoutInformationTitle));
         }
     }

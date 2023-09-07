@@ -12,65 +12,97 @@ namespace SwagLabs_ShoppingCart.Pages
             genericPage = new GenericPage(driver);
         }
 
-        public int GetProductsCount()
+        public Task<int> GetProductsCountAsync()
         {
-            return ProductsCount.Count();
+            int count = ProductsCount.Count();
+            return Task.FromResult(count);
         }
 
-        public Product GetProductElements(IWebElement element)
+        public Product GetProductListElements()
         {
-            return genericPage.GetProductElements(element);
+            return genericPage.GetProductElements(GetProductContent().First());
         }
 
-        public IList<IWebElement> GetProductContent()
+        public IList<Product> GetProductsList()
         {
-            return ProductsContent;
+            var products = new List<Product>();
+
+            foreach (var productContent in GetProductContent())
+            {
+                var product = GetProductListElements(productContent);
+                products.Add(product);
+            }
+
+            return products;
         }
 
-        public void SortProducts(string option)
+
+        public async Task SortProductsAsync(string option)
         {
-            SortProductsList(option).Click();
+            await Task.Run(() =>
+            {
+                SortProductsList(option).Click();
+            });
         }
 
-        public List<decimal> DecimalPrices()
+        public async Task<List<decimal>> DecimalPricesAsync()
         {
-            List<decimal> prices = ProductPricesList.Select(e => Decimal.Parse(e.Text.Trim('$'))).ToList();
-
-            return prices;
+            return await Task.Run(() =>
+            {
+                List<decimal> prices = ProductPricesList.Select(e => Decimal.Parse(e.Text.Trim('$'))).ToList();
+                return prices;
+            });
         }
 
-        public List<string> ProductsNames()
+        public async Task<List<string>> ProductsNamesAsync()
         {
-            List<string> names = ProductNames.Select(e => e.Text).ToList();
-
-            return names;
+            return await Task.Run(() =>
+            {
+                List<string> names = ProductNames.Select(e => e.Text).ToList();
+                return names;
+            });
         }
 
-        public void AddRemoveProduct()
+        public async Task AddRemoveProductAsync()
         {
-            AddToCartButton.Click();
+            await Task.Run(() =>
+            {
+                AddToCartButton.Click();
+            });
         }
 
-        public int GetProductId(string linkId)
+        public async Task<int> GetProductIdAsync(string linkId)
         {
-            var id = linkId.Replace("item_", "").Replace("_title_link", "").Trim();
-
-            return int.Parse(id);
+            return await Task.Run(() =>
+            {
+                var id = linkId.Replace("item_", "").Replace("_title_link", "").Trim();
+                return int.Parse(id);
+            });
         }
 
-        public IWebElement GetProductLink(int id)
+        public string GetProductLink(int id)
         {
-            return ProductLink(id);
+            return ProductLink(id).Text;
         }
 
-        public string GetProductLinkId(IWebElement productElement)
+        public string GetProductLinkId()
         {
-            return ProductLinkId(productElement);
+            return ProductLinkId(GetProductContent().First());
         }
 
         public void ClickFirstProductTitle(int i)
         {
-            GetProductLink(i).Click();
+            ProductLink(i).Click();
+        }
+
+        private Product GetProductListElements(IWebElement element)
+        {
+            return genericPage.GetProductElements(element);
+        }
+
+        private IList<IWebElement> GetProductContent()
+        {
+            return ProductsContent;
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using SwagLabs_ShoppingCart.Models;
 using SwagLabs_ShoppingCart.Models.DTO;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace SwagLabs_ShoppingCart.Pages
 {
@@ -10,6 +9,12 @@ namespace SwagLabs_ShoppingCart.Pages
         {
         }
 
+        public void Logout()
+        {
+            MenuButton.Click();
+            LogoutLink.Click();
+        }
+        
         public Product GetProductElements(IWebElement element)
         {
             var product = new Product();

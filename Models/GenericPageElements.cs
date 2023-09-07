@@ -28,5 +28,9 @@ namespace SwagLabs_ShoppingCart.Models
         {
             return element.FindElement(By.ClassName("inventory_item_price"));
         }
+
+        protected IWebElement MenuButton => driver.FindElement(By.Id("react-burger-menu-btn"));
+
+        protected IWebElement LogoutLink => driver.FindElement(By.Id("logout_sidebar_link"));
     }
 }

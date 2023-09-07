@@ -2,7 +2,7 @@
 
 namespace SwagLabs_ShoppingCart.Tests
 {
-    public class LoginPageTests : BaseTest, Constants
+    public class LoginPageTests : RootTest, Constants
     {
         private LoginPage page;
 
@@ -20,11 +20,12 @@ namespace SwagLabs_ShoppingCart.Tests
         public void LoginWithInvalidCredentials(string username, string password, string errorMessage)
         {
             page.Open();
+
             Assert.That(page.GetPageHeadingText(), Is.EqualTo(Constants.LoginPageHeader));
 
             page.Login(username, password);
 
-            Assert.True(page.PageErrorMessageExist());
+            Assert.That(page.PageErrorMessageExist(), Is.True);
             Assert.That(page.GetPageErrorText(), Is.EqualTo(errorMessage));
         }
 
@@ -34,10 +35,11 @@ namespace SwagLabs_ShoppingCart.Tests
         public void LoginWithValidCredentials(string username, string password)
         {
             page.Open();
+
             Assert.That(page.GetPageHeadingText(), Is.EqualTo(Constants.LoginPageHeader));
 
             page.Login(username, password);
-            Assert.IsTrue(new ProductsListPage(driver).IsPageOpen());
+            Assert.That(new ProductsListPage(driver).IsPageOpen(), Is.True);
         }
     }
 }

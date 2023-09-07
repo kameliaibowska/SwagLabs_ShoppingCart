@@ -6,7 +6,6 @@ namespace SwagLabs_ShoppingCart.Tests
     public class CheckoutOverviewPageTests : BaseTest, Constants
     {
         private CheckoutOverviewPage page;
-        private LoginPage loginPage;
         private ProductsListPage productsListPage;
         private ShoppingCartIconPage shoppingCartIconPage;
         private ShoppingCartPage shoppingCartPage;
@@ -14,25 +13,26 @@ namespace SwagLabs_ShoppingCart.Tests
         private Product firstSelectedProductFromList;
         private Product secondSelectedProductFromList;
 
-        [SetUp]
-        public void Setup()
+        public CheckoutOverviewPageTests(string username, string password) : base(username, password)
         {
-            loginPage = new LoginPage(driver);
+        }
+
+        [SetUp]
+        public new async Task Setup()
+        {
             productsListPage = new ProductsListPage(driver);
             shoppingCartIconPage = new ShoppingCartIconPage(driver);
             shoppingCartPage = new ShoppingCartPage(driver);
             page = new CheckoutOverviewPage(driver);
             checkoutInformationPage = new CheckoutInformationPage(driver);
 
-            loginPage.Open();
-            loginPage.Login(Constants.ValidUsername, Constants.ValidPassword);
-            NavigateToCheckoutOverviewPage();
+            await NavigateToCheckoutOverviewPage();
         }
 
         [Test]
-        public void CheckCheckoutOverviewContent()
+        public async Task CheckCheckoutOverviewContent()
         {
-            var checkoutOvarviewItemsCount = page.GetCheckoutOverviewItemsCount();
+            var checkoutOverviewItemsCount = page.GetCheckoutOverviewItemsCount();
 
             var checkoutOverviewItems = page.GetCheckoutOverviewProducts();
             var expectedItems = new List<Product>
@@ -41,48 +41,58 @@ namespace SwagLabs_ShoppingCart.Tests
                 secondSelectedProductFromList
             };
 
-            Assert.That(checkoutOverviewItems.SequenceEqual(expectedItems), Is.True);
-            Assert.That(shoppingCartIconPage.GetShoppingCartItems, Is.EqualTo(checkoutOvarviewItemsCount));
-            Assert.That(page.IsPaymentInformationLabelDisplayed);
-            Assert.That(page.GetPaymentInformation(), Is.EqualTo(Constants.SauceCard));
-            Assert.That(page.IsShippingInformationLabelDisplayed);
-            Assert.That(page.GetShippingInformation(), Is.EqualTo(Constants.SauceShoppingInformation));
-            Assert.That(page.IsPriceTotalLabelDisplayed());
+            Assert.Multiple(async () =>
+            {
+                Assert.That(checkoutOverviewItems.SequenceEqual(expectedItems), Is.True);
+                Assert.That(shoppingCartIconPage.GetShoppingCartItems(),
+                    Is.EqualTo(checkoutOverviewItemsCount));
+                Assert.That(await page.IsPaymentInformationLabelDisplayedAsync());
+                Assert.That(page.GetPaymentInformation(), Is.EqualTo(Constants.SauceCard));
+                Assert.That(await page.IsShippingInformationLabelDisplayedAsync());
+                Assert.That(page.GetShippingInformation(), Is.EqualTo(Constants.SauceShoppingInformation));
+                Assert.That(page.IsPriceTotalLabelDisplayedAsync());
+            });
 
-            var itemTotalValue = page.GetItemTotalValue();
+            var itemTotalValue = page.GetItemTotalValueAsync();
             var productsPricesSum = checkoutOverviewItems.Sum(p => p.ProductPrice);
-            var taxValue = Math.Round(page.GetTaxValue(), 2);
+            var taxValue = Math.Round(await page.GetTaxValueAsync(), 2);
             var taxOverTheSum = Math.Round(productsPricesSum * 0.08, 2);
             var totalValue = page.GetTotalValue();
+            var sum = Math.Round(itemTotalValue + taxValue, 2);
 
-            Assert.That(itemTotalValue, Is.EqualTo(productsPricesSum));
-            Assert.That(taxValue.CompareTo(taxOverTheSum), Is.EqualTo(0));
-            Assert.That(totalValue, Is.EqualTo(itemTotalValue + taxValue));
+            Assert.Multiple(() =>
+            {
+                Assert.That(itemTotalValue, Is.EqualTo(productsPricesSum));
+                Assert.That(taxValue.CompareTo(taxOverTheSum), Is.EqualTo(0));
+                Assert.That(totalValue, Is.EqualTo(itemTotalValue + taxValue));
+            });
         }
 
-        private void NavigateToCheckoutOverviewPage()
+        private async Task NavigateToCheckoutOverviewPage()
         {
-            productsListPage.SortProducts(Constants.PriceLowToHigh);
+            await Task.Run(async() =>
+            {
+                await productsListPage.SortProductsAsync(Constants.PriceLowToHigh);
 
-            // add first product from the list by price
-            productsListPage.AddRemoveProduct();
-            var firstAddedProduct = productsListPage.GetProductContent().First();
-            firstSelectedProductFromList = productsListPage.GetProductElements(firstAddedProduct);
+                // add first product from the list by price
+                await productsListPage.AddRemoveProductAsync();
+                firstSelectedProductFromList = productsListPage.GetProductListElements();
 
-            // add first product from the list by name
-            productsListPage.SortProducts(Constants.NameZtoA);           
-            productsListPage.AddRemoveProduct();
-            var secondAddedProduct = productsListPage.GetProductContent().First();
-            secondSelectedProductFromList = productsListPage.GetProductElements(secondAddedProduct);
-            shoppingCartIconPage.GoToShoppingCart();
-            shoppingCartPage.Checkout();
-            checkoutInformationPage.FieldOutUserInformation(Constants.CheckoutInformationFirstName,
-                Constants.CheckoutInformationLastName,
-                Constants.CheckoutInformationZipCode);
-            checkoutInformationPage.ContinueCheckout();
+                // add first product from the list by name
+                await productsListPage.SortProductsAsync(Constants.NameZtoA);
+                await productsListPage.AddRemoveProductAsync();
+                secondSelectedProductFromList = productsListPage.GetProductListElements();
 
-            Assert.IsTrue(page.IsPageOpen());
-            Assert.That(page.CheckPageTitle(), Is.EqualTo(Constants.CheckoutOverviewTitle));
+                await shoppingCartIconPage.GoToShoppingCartAsync();
+                await shoppingCartPage.CheckoutAsync();
+                await checkoutInformationPage.FieldOutUserInformationAsync(Constants.CheckoutInformationFirstName,
+                    Constants.CheckoutInformationLastName,
+                    Constants.CheckoutInformationZipCode);
+                await checkoutInformationPage.ContinueCheckoutAsync();
+
+                Assert.That(page.IsPageOpen(), Is.True);
+                Assert.That(page.CheckPageTitle(), Is.EqualTo(Constants.CheckoutOverviewTitle));
+            });
         }
     }
 }

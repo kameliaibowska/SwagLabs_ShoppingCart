@@ -33,25 +33,34 @@ namespace SwagLabs_ShoppingCart.Pages
             return products;
         }
 
-        public void RemoveProduct()
+        public async Task RemoveProductAsync()
         {
-            RemoveButton.Click();
+            await Task.Run(() =>
+            {
+                RemoveButton.Click();
+            });
         }
 
         public int GetCartItemsCount()
         {
-            var cartItems = CartItems.Count();
+            var cartItems = CartItems.Count;
             return cartItems;
         }
 
-        public void ContinueShopping()
+        public async Task ContinueShoppingAsync()
         {
-            ContinueShoppingButton.Click();
+            await Task.Run(() =>
+            {
+                ContinueShoppingButton.Click();
+            });
         }
 
-        public void Checkout()
+        public async Task CheckoutAsync()
         {
-            CheckoutButton.Click();
+            await Task.Run(() =>
+            {
+                CheckoutButton.Click();
+            });
         }
     }
 }

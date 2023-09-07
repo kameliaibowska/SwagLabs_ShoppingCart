@@ -13,16 +13,31 @@ namespace SwagLabs_ShoppingCart.Pages
             return CheckoutInformationPageTitle.Text;
         }
 
-        public void FieldOutUserInformation(string firstName, string lastName, string zipCode)
+        //public void FieldOutUserInformation(string firstName, string lastName, string zipCode)
+        //{
+        //    FirstNameField.SendKeys(firstName);
+        //    LastNameField.SendKeys(lastName);
+        //    ZipCodeField.SendKeys(zipCode);        
+        //}
+
+        //public bool CheckoutInformationErrorMessageExist()
+        //{
+        //    return CheckoutInformationErrorMessageLabel.Displayed;
+        //}
+
+        public async Task FieldOutUserInformationAsync(string firstName, string lastName, string zipCode)
         {
-            FirstNameField.SendKeys(firstName);
-            LastNameField.SendKeys(lastName);
-            ZipCodeField.SendKeys(zipCode);        
+            await Task.Run(() =>
+            {
+                FirstNameField.SendKeys(firstName);
+                LastNameField.SendKeys(lastName);
+                ZipCodeField.SendKeys(zipCode);
+            });
         }
 
-        public bool CheckoutInformationErrorMessageExist()
+        public async Task<bool> CheckoutInformationErrorMessageExistAsync()
         {
-            return CheckoutInformationErrorMessageLabel.Displayed;
+            return await Task.FromResult(CheckoutInformationErrorMessageLabel.Displayed);
         }
 
         public string GetCheckoutInformationErrorText()
@@ -30,14 +45,20 @@ namespace SwagLabs_ShoppingCart.Pages
             return CheckoutInformationErrorMessageLabel.Text;
         }
 
-        public void ContinueCheckout()
+        public async Task ContinueCheckoutAsync()
         {
-            ContinueButton.Click();
+            await Task.Run(() =>
+            {
+                ContinueButton.Click();
+            });
         }
 
-        public void CancelCheckout()
+        public async Task CancelCheckoutAsync()
         {
-            CancelButton.Click();
+            await Task.Run(() =>
+            {
+                CancelButton.Click();
+            });
         }
     }
 }

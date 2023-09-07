@@ -6,20 +6,21 @@ namespace SwagLabs_ShoppingCart.Tests
     public class ProductDetailsPageTests : BaseTest, Constants
     {
         private ProductsListPage productsListPage;
-        private LoginPage loginPage;
-        private ProductDetailsPage page;
-        private Product selectedProductFromList;
+        private ProductDetailsPage? page;
+        private Product? selectedProductFromList;
         private ShoppingCartIconPage shoppingCartIconPage;
 
-        [SetUp]
-        public void Setup()
+        public ProductDetailsPageTests(string username, string password) : base(username, password)
         {
-            loginPage = new LoginPage(driver);
+        }
+
+        [SetUp]
+        public new async Task Setup()
+        {
             productsListPage = new ProductsListPage(driver);
             shoppingCartIconPage = new ShoppingCartIconPage(driver);
-            loginPage.Open();
-            loginPage.Login(Constants.ValidUsername, Constants.ValidPassword);
-            OpenProductDetailsPage();
+
+            await OpenProductDetailsPageAsync();
         }
 
         [Test]
@@ -27,14 +28,15 @@ namespace SwagLabs_ShoppingCart.Tests
         {
             var product = page.GetProductElements();
             Assert.That(product, Is.Not.Null);
-
-            Assert.That(selectedProductFromList.ProductTitle, Is.EqualTo(product.ProductTitle));
-            Assert.That(selectedProductFromList.ProductDescription, Is.EqualTo(product.ProductDescription));
-            Assert.That(selectedProductFromList.ProductPrice, Is.EqualTo(product.ProductPrice));
-
+            Assert.Multiple(() =>
+            {
+                Assert.That(selectedProductFromList?.ProductTitle, Is.EqualTo(product.ProductTitle));
+                Assert.That(selectedProductFromList?.ProductDescription, Is.EqualTo(product.ProductDescription));
+                Assert.That(selectedProductFromList?.ProductPrice, Is.EqualTo(product.ProductPrice));
+            });
             page.BackToProductsList();
 
-            Assert.IsTrue(productsListPage.IsPageOpen());
+            Assert.That(productsListPage.IsPageOpen(), Is.True);
         }
 
         [Test]
@@ -50,13 +52,12 @@ namespace SwagLabs_ShoppingCart.Tests
             Assert.That(shoppingCartIconPage.VerifyShoppingCartIsEmpty, Is.EqualTo(0));
         }
 
-        private void OpenProductDetailsPage()
+        private async Task OpenProductDetailsPageAsync()
         {
-            productsListPage.SortProducts(Constants.PriceLowToHigh);
-            var firstProduct = productsListPage.GetProductContent().First();
-            selectedProductFromList = productsListPage.GetProductElements(firstProduct);
-            var productLink = productsListPage.GetProductLinkId(firstProduct);
-            var productId = productsListPage.GetProductId(productLink);
+            await productsListPage.SortProductsAsync(Constants.PriceLowToHigh);
+            selectedProductFromList = productsListPage.GetProductListElements();
+            var productLink = productsListPage.GetProductLinkId();
+            var productId = await productsListPage.GetProductIdAsync(productLink);
             productsListPage.ClickFirstProductTitle(productId);
             page = new ProductDetailsPage(driver, productId);
 

@@ -5,45 +5,48 @@ namespace SwagLabs_ShoppingCart.Tests
     public class ProductsListPageTests : BaseTest, Constants
     {
         private ProductsListPage page;
-        private LoginPage loginPage;
         private ShoppingCartIconPage shoppingCartIconPage;
 
-        [SetUp]
-        public void Setup()
+        public ProductsListPageTests(string username, string password) : base(username, password)
         {
-            loginPage = new LoginPage(driver);
+        }
+
+        [SetUp]
+        public new void Setup()
+        {
             shoppingCartIconPage = new ShoppingCartIconPage(driver);
-            loginPage.Open();
-            loginPage.Login(Constants.ValidUsername, Constants.ValidPassword);
             page = new ProductsListPage(driver);
         }
 
         [Test]
-        public void CheckProductsContentIsNotEmpty()
+        public async Task CheckProductsContentIsNotEmptyAsync()
         {
-            var products = page.GetProductsCount();
+
+            var products = await page.GetProductsCountAsync();
             Assert.That(products, Is.GreaterThan(0));
 
             var i = 0;
 
-            foreach (var productContent in page.GetProductContent())
+            foreach (var product in page.GetProductsList())
             {
-                var product = page.GetProductElements(productContent);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(string.IsNullOrWhiteSpace(product.ProductTitle), Is.False);
+                    Assert.That(string.IsNullOrWhiteSpace(product.ProductDescription), Is.False);
+                    Assert.That(product.ProductPrice > 0, Is.True);
+                    Assert.That(page.GetProductLink(i), Is.Not.Empty);
+                });
 
-                Assert.That(string.IsNullOrWhiteSpace(product.ProductTitle), Is.False);
-                Assert.That(string.IsNullOrWhiteSpace(product.ProductDescription), Is.False);
-                Assert.That(product.ProductPrice > 0, Is.True);
-                Assert.That(page.GetProductLink(i).ToString(), Is.Not.Empty);
                 i++;
             }
         }
 
         [TestCase(Constants.PriceLowToHigh)]
         [TestCase(Constants.PriceHighToLow)]
-        public void OrderProductsByPrice(string option)
+        public async Task OrderProductsByPriceAsync(string option)
         {
-            page.SortProducts(option);
-            var productsPrices = page.DecimalPrices();
+            await page.SortProductsAsync(option);
+            var productsPrices = await page.DecimalPricesAsync();
 
             for (int i = 0; i < productsPrices.Count - 1; i++)
             {
@@ -62,10 +65,10 @@ namespace SwagLabs_ShoppingCart.Tests
 
         [TestCase(Constants.NameZtoA)]
         [TestCase(Constants.NameAtoZ)]
-        public void OrderProductsByNameZtoA(string option)
+        public async Task OrderProductsByNameZtoAAsync(string option)
         {
-            page.SortProducts(option);
-            var productsNames = page.ProductsNames();
+            await page.SortProductsAsync(option);
+            var productsNames = await page.ProductsNamesAsync();
 
             for (int i = 0; i < productsNames.Count - 1; i++)
             {
@@ -83,25 +86,34 @@ namespace SwagLabs_ShoppingCart.Tests
         }
 
         [Test]
-        public void AddFirstProductToShoppingCart()
+        public async Task AddFirstProductToShoppingCartAsync()
         {
-            page.SortProducts(Constants.PriceLowToHigh);
-            page.AddRemoveProduct();
+            await Task.Run(async () =>
+            {
+                await page.SortProductsAsync(Constants.PriceLowToHigh);
+                await page.AddRemoveProductAsync();
+            });
 
-            Assert.That(shoppingCartIconPage.GetShoppingCartItems, Is.EqualTo(1));
+            var shoppingCartItems = shoppingCartIconPage.GetShoppingCartItems();
+
+            Assert.That(shoppingCartItems, Is.EqualTo(1));
         }
 
         [Test]
-        public void RemoveProductToShoppingCart()
+        public async Task RemoveProductFromShoppingCartAsync()
         {
-            page.SortProducts(Constants.NameAtoZ);
-            page.AddRemoveProduct();
+            await page.SortProductsAsync(Constants.NameAtoZ);
+            await page.AddRemoveProductAsync();
 
-            Assert.That(shoppingCartIconPage.GetShoppingCartItems, Is.EqualTo(1));
+            var shoppingCartItems = shoppingCartIconPage.GetShoppingCartItems();
 
-            page.AddRemoveProduct();
+            Assert.That(shoppingCartItems, Is.EqualTo(1));
 
-            Assert.That(shoppingCartIconPage.VerifyShoppingCartIsEmpty, Is.EqualTo(0));
+            await page.AddRemoveProductAsync();
+
+            var cartContent = shoppingCartIconPage.VerifyShoppingCartIsEmpty();
+
+            Assert.That(cartContent, Is.EqualTo(0));
         }
     }
 }
