@@ -31,7 +31,8 @@ namespace SwagLabs_ShoppingCart.Tests
             var cartItems = page.GetCartItemsCount();
             var shoppingCartItemsCount =  shoppingCartIconPage.GetShoppingCartItems();
 
-            Assert.That(cartItems, Is.EqualTo(shoppingCartItemsCount));
+            Assert.That(cartItems, Is.EqualTo(shoppingCartItemsCount),
+                Constants.IncorrectShoppingCartCount);
 
             var shoppingCartItems = page.GetShoppingCartProducts();
             var expectedItems = new List<Product>
@@ -40,11 +41,13 @@ namespace SwagLabs_ShoppingCart.Tests
                 secondSelectedProductFromList
             };
 
-            Assert.That(shoppingCartItems.SequenceEqual(expectedItems), Is.True);
+            Assert.That(shoppingCartItems.SequenceEqual(expectedItems), Is.True,
+                Constants.ProductsAreNotSame);
 
             await page.ContinueShoppingAsync();
 
-            Assert.That(productsListPage.IsPageOpen(), Is.True);
+            Assert.That(productsListPage.IsPageOpen(), Is.True,
+                Constants.PageNotFound);
         }
 
         [Test]
@@ -53,12 +56,14 @@ namespace SwagLabs_ShoppingCart.Tests
             var cartItems = page.GetCartItemsCount();
             var shoppingCartItems = shoppingCartIconPage.GetShoppingCartItems();
 
-            Assert.That(cartItems, Is.EqualTo(shoppingCartItems));
+            Assert.That(cartItems, Is.EqualTo(shoppingCartItems),
+                Constants.IncorrectShoppingCartCount);
 
             await page.RemoveProductAsync();
             shoppingCartItems = shoppingCartIconPage.GetShoppingCartItems();
 
-            Assert.That(shoppingCartItems, Is.EqualTo(cartItems - 1));
+            Assert.That(shoppingCartItems, Is.EqualTo(cartItems - 1),
+                Constants.IncorrectShoppingCartCount);
         }
 
         private async Task NavigateToShoppingCartPageAsync()
@@ -76,8 +81,10 @@ namespace SwagLabs_ShoppingCart.Tests
 
             await shoppingCartIconPage.GoToShoppingCartAsync();
 
-            Assert.That(page.IsPageOpen(), Is.True);
-            Assert.That(page.CheckPageTitle(), Is.EqualTo(Constants.ShoppingCartTitle));
+            Assert.That(page.IsPageOpen(), Is.True,
+                Constants.PageNotFound);
+            Assert.That(page.CheckPageTitle(), Is.EqualTo(Constants.ShoppingCartTitle),
+                Constants.IncorrectPageTitle);
         }
     }
 }

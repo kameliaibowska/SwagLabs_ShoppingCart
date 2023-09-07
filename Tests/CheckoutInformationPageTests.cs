@@ -39,25 +39,32 @@ namespace SwagLabs_ShoppingCart.Tests
 
             if (firstName.Length <= 0)
             {
-                Assert.That(await page.CheckoutInformationErrorMessageExistAsync(), Is.True);
+                Assert.That(await page.CheckoutInformationErrorMessageExistAsync(), Is.True,
+                    Constants.MissingErrorMessage);
                 Assert.That(page.GetCheckoutInformationErrorText(),
-                    Is.EqualTo(Constants.CheckoutInformationFirstNameErrorMessage));
+                    Is.EqualTo(Constants.CheckoutInformationFirstNameErrorMessage), 
+                    Constants.IncorectErrorMessage);
             }
             else if (lastName.Length <= 0)
             {
-                Assert.That(await page.CheckoutInformationErrorMessageExistAsync(), Is.True);
+                Assert.That(await page.CheckoutInformationErrorMessageExistAsync(), Is.True,
+                    Constants.MissingErrorMessage);
                 Assert.That(page.GetCheckoutInformationErrorText(),
-                    Is.EqualTo(Constants.CheckoutInformationLastNameErrorMessage));
+                    Is.EqualTo(Constants.CheckoutInformationLastNameErrorMessage),
+                    Constants.IncorectErrorMessage);
             }
             else if (zipCode.Length <= 0)
             {
-                Assert.That(await page.CheckoutInformationErrorMessageExistAsync(), Is.True);
+                Assert.That(await page.CheckoutInformationErrorMessageExistAsync(), Is.True,
+                    Constants.MissingErrorMessage);
                 Assert.That(page.GetCheckoutInformationErrorText(),
-                    Is.EqualTo(Constants.CheckoutInformationZipCodeErrorMessage));
+                    Is.EqualTo(Constants.CheckoutInformationZipCodeErrorMessage),
+                    Constants.IncorectErrorMessage);
             }
             else
             {
-                Assert.That(checkoutOverviewPage.IsPageOpen(), Is.True);
+                Assert.That(checkoutOverviewPage.IsPageOpen(), Is.True,
+                    Constants.PageNotFound);
             }
         }
 
@@ -74,8 +81,11 @@ namespace SwagLabs_ShoppingCart.Tests
             await shoppingCartIconPage.GoToShoppingCartAsync();
             await shoppingCartPage.CheckoutAsync();
 
-            Assert.That(page.IsPageOpen(), Is.True);
-            Assert.That(page.CheckPageTitle(), Is.EqualTo(Constants.CheckoutInformationTitle));
+            Assert.That(page.IsPageOpen(), Is.True,
+                Constants.PageNotFound);
+            Assert.That(page.CheckPageTitle(), 
+                Is.EqualTo(Constants.CheckoutInformationTitle), 
+                Constants.IncorrectPageTitle);
         }
     }
 }

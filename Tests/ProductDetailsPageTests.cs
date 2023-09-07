@@ -36,20 +36,24 @@ namespace SwagLabs_ShoppingCart.Tests
             });
             page.BackToProductsList();
 
-            Assert.That(productsListPage.IsPageOpen(), Is.True);
+            Assert.That(productsListPage.IsPageOpen(), Is.True,
+                Constants.PageNotFound);
         }
 
         [Test]
         public void AddToCartProduct()
         {
             var product = page.GetProductElements();
-            Assert.That(product, Is.Not.Null);
+            Assert.That(product, Is.Not.Null,
+                Constants.MissingProduct);
 
             page.PressAddToCartRemoveButton();
-            Assert.That(shoppingCartIconPage.GetShoppingCartItems, Is.EqualTo(1));
+            Assert.That(shoppingCartIconPage.GetShoppingCartItems, Is.EqualTo(1),
+                Constants.IncorrectShoppingCartCount);
 
             page.PressAddToCartRemoveButton();
-            Assert.That(shoppingCartIconPage.VerifyShoppingCartIsEmpty, Is.EqualTo(0));
+            Assert.That(shoppingCartIconPage.VerifyShoppingCartIsEmpty, Is.EqualTo(0),
+                Constants.ShoppingCartIsNotEmpty);
         }
 
         private async Task OpenProductDetailsPageAsync()
@@ -61,7 +65,8 @@ namespace SwagLabs_ShoppingCart.Tests
             productsListPage.ClickFirstProductTitle(productId);
             page = new ProductDetailsPage(driver, productId);
 
-            Assert.That(driver.Url, Is.EqualTo(page.GetProductUrl()));
+            Assert.That(driver.Url, Is.EqualTo(page.GetProductUrl()),
+                Constants.IncorrectUrl);
         }
     }
 }

@@ -64,8 +64,27 @@
         // Checkout complete page
         public const string CheckoutCompleteTitle = "Checkout: Complete!";
 
-        public const string CompleteMessegeHeader = "Thank you for your order!";
+        public const string CompleteMessageHeader = "Thank you for your order!";
 
-        public const string CompleteMessegeDescription = "Your order has been dispatched, and will arrive just as fast as the pony can get there!";
+        public const string CompleteMessageDescription = "Your order has been dispatched, and will arrive just as fast as the pony can get there!";
+
+        // error messages
+        public const string PageNotFound = "Page not found!";
+
+        public const string IncorrectPageTitle = "Incorrect Page Title!";
+
+        public const string IncorectErrorMessage = "Incorrect error message!";
+
+        public const string MissingErrorMessage = "Missing error message!";
+
+        public const string IncorrectUrl = "Incorrect url!";
+
+        public const string IncorrectShoppingCartCount = "Shopping cart count is incorrect!";
+
+        public const string ShoppingCartIsNotEmpty = "Shopping cart is not empty!";
+
+        public const string ProductsAreNotSame = "Products are not the same!";
+
+        public const string MissingProduct = "Products is missing!";
     }
 }

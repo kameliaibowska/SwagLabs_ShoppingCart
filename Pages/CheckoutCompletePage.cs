@@ -18,7 +18,7 @@ namespace SwagLabs_ShoppingCart.Pages
             return CompleteImage.Displayed;
         }
 
-        public string CheckCompleteMessege()
+        public string CheckCompleteMessage()
         {
             return CheckoutCompletePageHeader.Text;
         }

@@ -90,8 +90,10 @@ namespace SwagLabs_ShoppingCart.Tests
                     Constants.CheckoutInformationZipCode);
                 await checkoutInformationPage.ContinueCheckoutAsync();
 
-                Assert.That(page.IsPageOpen(), Is.True);
-                Assert.That(page.CheckPageTitle(), Is.EqualTo(Constants.CheckoutOverviewTitle));
+                Assert.That(page.IsPageOpen(), Is.True,
+                    Constants.PageNotFound);
+                Assert.That(page.CheckPageTitle(), Is.EqualTo(Constants.CheckoutOverviewTitle),
+                    Constants.IncorrectPageTitle);
             });
         }
     }

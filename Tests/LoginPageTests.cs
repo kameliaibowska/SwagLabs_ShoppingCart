@@ -21,12 +21,15 @@ namespace SwagLabs_ShoppingCart.Tests
         {
             page.Open();
 
-            Assert.That(page.GetPageHeadingText(), Is.EqualTo(Constants.LoginPageHeader));
+            Assert.That(page.GetPageHeadingText(), Is.EqualTo(Constants.LoginPageHeader),
+                Constants.IncorrectPageTitle);
 
             page.Login(username, password);
 
-            Assert.That(page.PageErrorMessageExist(), Is.True);
-            Assert.That(page.GetPageErrorText(), Is.EqualTo(errorMessage));
+            Assert.That(page.PageErrorMessageExist(), Is.True,
+                Constants.MissingErrorMessage);
+            Assert.That(page.GetPageErrorText(), Is.EqualTo(errorMessage),
+                Constants.IncorectErrorMessage);
         }
 
         [TestCase(Constants.ValidUsername, Constants.ValidPassword)]
@@ -36,10 +39,13 @@ namespace SwagLabs_ShoppingCart.Tests
         {
             page.Open();
 
-            Assert.That(page.GetPageHeadingText(), Is.EqualTo(Constants.LoginPageHeader));
+            Assert.That(page.GetPageHeadingText(), Is.EqualTo(Constants.LoginPageHeader),
+                Constants.IncorrectPageTitle);
 
             page.Login(username, password);
-            Assert.That(new ProductsListPage(driver).IsPageOpen(), Is.True);
+
+            Assert.That(new ProductsListPage(driver).IsPageOpen(), Is.True,
+                Constants.PageNotFound);
         }
     }
 }

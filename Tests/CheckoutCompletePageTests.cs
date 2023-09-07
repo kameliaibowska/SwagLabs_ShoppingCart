@@ -35,12 +35,13 @@ namespace SwagLabs_ShoppingCart.Tests
             Assert.Multiple(() =>
             {
                 Assert.That(page.CheckCompletePageTitle(), Is.EqualTo(Constants.CheckoutCompleteTitle));
-                Assert.That(page.CheckCompleteMessege(), Is.EqualTo(Constants.CompleteMessegeHeader));
-                Assert.That(page.CheckCompleteDescription(), Is.EqualTo(Constants.CompleteMessegeDescription));
+                Assert.That(page.CheckCompleteMessage(), Is.EqualTo(Constants.CompleteMessageHeader));
+                Assert.That(page.CheckCompleteDescription(), Is.EqualTo(Constants.CompleteMessageDescription));
             });
 
             page.GoBackToHome();
-            Assert.That(productsListPage.IsPageOpen(), Is.True);
+            Assert.That(productsListPage.IsPageOpen(), Is.True,
+                Constants.PageNotFound);
         }
 
         private async Task FinalizeOrderAsync()
@@ -62,7 +63,8 @@ namespace SwagLabs_ShoppingCart.Tests
             await checkoutInformationPage.ContinueCheckoutAsync();
             await checkoutOverviewPage.FinishOrderAsync();
 
-            Assert.That(page.IsPageOpen(), Is.True);
+            Assert.That(page.IsPageOpen(), Is.True,
+                Constants.PageNotFound);
         }
     }
 }

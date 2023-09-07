@@ -23,7 +23,8 @@ namespace SwagLabs_ShoppingCart.Tests
         {
 
             var products = await page.GetProductsCountAsync();
-            Assert.That(products, Is.GreaterThan(0));
+            Assert.That(products, Is.GreaterThan(0),
+                Constants.MissingProduct);
 
             var i = 0;
 
@@ -96,7 +97,8 @@ namespace SwagLabs_ShoppingCart.Tests
 
             var shoppingCartItems = shoppingCartIconPage.GetShoppingCartItems();
 
-            Assert.That(shoppingCartItems, Is.EqualTo(1));
+            Assert.That(shoppingCartItems, Is.EqualTo(1), 
+                Constants.IncorrectShoppingCartCount);
         }
 
         [Test]
@@ -107,13 +109,15 @@ namespace SwagLabs_ShoppingCart.Tests
 
             var shoppingCartItems = shoppingCartIconPage.GetShoppingCartItems();
 
-            Assert.That(shoppingCartItems, Is.EqualTo(1));
+            Assert.That(shoppingCartItems, Is.EqualTo(1), 
+                Constants.IncorrectShoppingCartCount);
 
             await page.AddRemoveProductAsync();
 
             var cartContent = shoppingCartIconPage.VerifyShoppingCartIsEmpty();
 
-            Assert.That(cartContent, Is.EqualTo(0));
+            Assert.That(cartContent, Is.EqualTo(0), 
+                Constants.ShoppingCartIsNotEmpty);
         }
     }
 }
