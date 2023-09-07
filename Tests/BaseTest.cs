@@ -1,5 +1,4 @@
 ﻿using SwagLabs_ShoppingCart.Pages;
-using System.Security.AccessControl;
 
 namespace SwagLabs_ShoppingCart.Tests
 {
