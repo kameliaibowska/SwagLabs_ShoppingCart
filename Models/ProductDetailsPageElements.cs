@@ -13,7 +13,7 @@ namespace SwagLabs_ShoppingCart.Models
 
         protected string ItemUrl()
         {
-            var url = $"https://www.saucedemo.com/inventory-item.html?id={i}";
+            var url = $"{Constants.BaseUrl}/inventory-item.html?id={i}";
             driver.Navigate().GoToUrl(url);
             return url;
         }

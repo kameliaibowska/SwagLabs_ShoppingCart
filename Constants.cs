@@ -2,6 +2,8 @@
 {
     public interface Constants
     {
+        public const string BaseUrl = "https://www.saucedemo.com";
+
         // login productsPage
         public const string LoginPageHeader = "Swag Labs";
 

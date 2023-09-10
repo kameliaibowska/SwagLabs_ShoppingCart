@@ -10,21 +10,26 @@ namespace SwagLabs_ShoppingCart.Pages
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
         }
 
-        protected virtual string BaseUrl { get; }
+        protected virtual string Url { get; }
 
         public void Open()
         {
-            driver.Navigate().GoToUrl(BaseUrl);
+            driver.Navigate().GoToUrl(GetFullUrl());
         }
 
         public bool IsPageOpen()
         {
-            return driver.Url == BaseUrl;
+            return driver.Url == GetFullUrl();
         }
 
         public string GetPageTitle()
         {
             return driver.Title;
+        }
+
+        private string GetFullUrl()
+        {
+            return $"{Constants.BaseUrl}{Url}";
         }
     }
 }

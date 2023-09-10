@@ -8,7 +8,7 @@ namespace SwagLabs_ShoppingCart.Models
         {
         }
 
-        protected override string BaseUrl => "https://www.saucedemo.com/checkout-step-two.html";
+        protected override string Url => "/checkout-step-two.html";
 
         protected IWebElement CheckoutOverviewPageTitle => driver.FindElement(By.ClassName("title"));
 
