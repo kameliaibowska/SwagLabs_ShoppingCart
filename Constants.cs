@@ -4,7 +4,7 @@
     {
         public const string BaseUrl = "https://www.saucedemo.com";
 
-        // login productsPage
+        // login page
         public const string LoginPageHeader = "Swag Labs";
 
         public const string ValidUsername = "standard_user";
@@ -27,7 +27,7 @@
 
         public const string InvalidCredentialsErrorMessage = "Epic sadface: Username and password do not match any user in this service";
 
-        // Products list productsPage
+        // Products list page
         public const string ProductsPageHeader = "Products";
 
         public const string PriceHighToLow = "hilo";
@@ -38,10 +38,10 @@
 
         public const string NameZtoA = "za";
 
-        // Shopping Cart productsPage
+        // Shopping Cart page
         public const string ShoppingCartTitle = "Your Cart";
 
-        // Checkout Information productsPage
+        // Checkout Information page
         public const string CheckoutInformationTitle = "Checkout: Your Information";
 
         public const string CheckoutInformationFirstName = "FName";
@@ -56,14 +56,14 @@
 
         public const string CheckoutInformationZipCodeErrorMessage = "Error: Postal Code is required";
 
-        // Checkput overview productsPage
+        // Checkput overview page
         public const string CheckoutOverviewTitle = "Checkout: Overview";
 
         public const string SauceCard = "SauceCard #31337";
 
         public const string SauceShoppingInformation = "Free Pony Express Delivery!";
 
-        // Checkout complete productsPage
+        // Checkout complete page
         public const string CheckoutCompleteTitle = "Checkout: Complete!";
 
         public const string CompleteMessageHeader = "Thank you for your order!";

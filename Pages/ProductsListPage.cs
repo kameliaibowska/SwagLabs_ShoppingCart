@@ -90,6 +90,11 @@ namespace SwagLabs_ShoppingCart.Pages
             });
         }
 
+        /**
+         * Extract product id from product link (item_{id}_title_link) to retrieve {id}
+         * input product link
+         * return product id
+         */
         public int GetProductId(string linkId)
         {
             var id = linkId.Replace("item_", "").Replace("_title_link", "").Trim();
@@ -104,11 +109,17 @@ namespace SwagLabs_ShoppingCart.Pages
             });
         }
 
+        /**
+         * Retrieve product link text by product id
+         * input product id
+         * return product link text (item_{id}_title_link)
+         */
         public string GetProductLink(int id)
         {
             return ProductLink(id).Text;
         }
 
+        // Retrieve product link for first product on page
         public string GetProductLinkId()
         {
             return ProductLinkId(GetProductContent().First());

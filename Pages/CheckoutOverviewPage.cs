@@ -86,11 +86,6 @@ namespace SwagLabs_ShoppingCart.Pages
             return double.Parse(tax);
         }
 
-        //public async Task<double> GetTaxValueAsync()
-        //{
-        //    return await Task.Run(() => GetTaxValue());
-        //}
-
         public double GetTotalValue()
         {
             var total = Total.Text.Replace("Total: $", "").Trim();

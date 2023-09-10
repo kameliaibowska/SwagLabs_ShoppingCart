@@ -13,18 +13,6 @@ namespace SwagLabs_ShoppingCart.Pages
             return CheckoutInformationPageTitle.Text;
         }
 
-        //public void FieldOutUserInformation(string firstName, string lastName, string zipCode)
-        //{
-        //    FirstNameField.SendKeys(firstName);
-        //    LastNameField.SendKeys(lastName);
-        //    ZipCodeField.SendKeys(zipCode);        
-        //}
-
-        //public bool CheckoutInformationErrorMessageExist()
-        //{
-        //    return CheckoutInformationErrorMessageLabel.Displayed;
-        //}
-
         public void FieldOutUserInformation(string firstName, string lastName, string zipCode)
         {
             FirstNameField.SendKeys(firstName);
