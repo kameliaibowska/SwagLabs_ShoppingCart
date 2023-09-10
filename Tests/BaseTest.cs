@@ -29,10 +29,9 @@ namespace SwagLabs_ShoppingCart.Tests
         }
 
         [TearDown]
-        public void CloseBrowser()
+        public void Logout()
         {
             genericPage.Logout();
-            driver.Quit();
         }
     }
 }

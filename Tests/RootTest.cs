@@ -14,7 +14,7 @@
         [TearDown]
         public void CloseBrowser()
         {
-            this.driver.Quit();
+            driver.Quit();
         }
     }
 }
