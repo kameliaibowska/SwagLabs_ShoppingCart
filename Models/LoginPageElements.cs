@@ -10,11 +10,11 @@ namespace SwagLabs_ShoppingCart.Models
 
         protected override string BaseUrl => "https://www.saucedemo.com/";
 
-        protected IWebElement UsernameField => driver.FindElement(By.Id("user-name"));
+        public IWebElement UsernameField => driver.FindElement(By.Id("user-name"));
 
-        protected IWebElement PasswordField => driver.FindElement(By.Id("password"));
+        public IWebElement PasswordField => driver.FindElement(By.Id("password"));
 
-        protected IWebElement LoginButton => driver.FindElement(By.Id("login-button"));
+        public IWebElement LoginButton => driver.FindElement(By.Id("login-button"));
 
         protected IWebElement PageHeadingLabel => driver.FindElement(By.ClassName("login_logo"));
 

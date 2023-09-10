@@ -45,7 +45,7 @@ namespace SwagLabs_ShoppingCart.Tests
         {
             var product = page.GetProductElements();
             Assert.That(product, Is.Not.Null,
-                Constants.MissingProduct);
+                Constants.MissingProducts);
 
             page.PressAddToCartRemoveButton();
             Assert.That(shoppingCartIconPage.GetShoppingCartItems, Is.EqualTo(1),

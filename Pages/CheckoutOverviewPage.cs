@@ -39,9 +39,14 @@ namespace SwagLabs_ShoppingCart.Pages
             return products;
         }
 
+        public bool IsPaymentInformationLabelDisplayed()
+        {
+            return PaymentInformationLabel.Displayed;
+        }
+
         public async Task<bool> IsPaymentInformationLabelDisplayedAsync()
         {
-            return await Task.FromResult(PaymentInformationLabel.Displayed);
+            return await Task.FromResult(IsPaymentInformationLabelDisplayed());
         }
 
         public string GetPaymentInformation ()
@@ -49,9 +54,14 @@ namespace SwagLabs_ShoppingCart.Pages
             return PaymentInformationValue.Text;
         }
 
+        public bool IsShippingInformationLabelDisplayed()
+        {
+            return ShippingInformationLabel.Displayed;
+        }
+
         public async Task<bool> IsShippingInformationLabelDisplayedAsync()
         {
-            return await Task.FromResult(ShippingInformationLabel.Displayed);
+            return await Task.FromResult(IsShippingInformationLabelDisplayed());
         }
 
         public string GetShippingInformation()
@@ -59,22 +69,27 @@ namespace SwagLabs_ShoppingCart.Pages
             return ShippingInformationValue.Text;
         }
 
-        public bool IsPriceTotalLabelDisplayedAsync()
+        public bool IsPriceTotalLabelDisplayed()
         {
             return PriceTotalLabel.Displayed;
         }
 
-        public double GetItemTotalValueAsync()
+        public double GetItemTotalValue()
         {
             var itemTotal = ItemTotal.Text.Replace("Item total: $", "").Trim();
             return double.Parse(itemTotal);
         }
 
-        public async Task<double> GetTaxValueAsync()
+        public double GetTaxValue()
         {
             var tax = Tax.Text.Replace("Tax: $", "").Trim();
-            return await Task.Run(() => double.Parse(tax));
+            return double.Parse(tax);
         }
+
+        //public async Task<double> GetTaxValueAsync()
+        //{
+        //    return await Task.Run(() => GetTaxValue());
+        //}
 
         public double GetTotalValue()
         {

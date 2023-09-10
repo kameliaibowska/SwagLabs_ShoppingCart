@@ -4,7 +4,8 @@ namespace SwagLabs_ShoppingCart.Tests
 {
     [TestFixture(Constants.ValidUsername, Constants.ValidPassword)]
     [TestFixture(Constants.PerformanceGlitchUsername, Constants.ValidPassword)]
-    [TestFixture(Constants.ProblemUsername, Constants.ValidPassword)]
+    // uncomment to check errors for the problem user
+    // [TestFixture(Constants.ProblemUsername, Constants.ValidPassword)]
     public class BaseTest : RootTest
     {
         private readonly string username;

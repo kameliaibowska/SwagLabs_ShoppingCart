@@ -50,12 +50,12 @@ namespace SwagLabs_ShoppingCart.Tests
                 Assert.That(page.GetPaymentInformation(), Is.EqualTo(Constants.SauceCard));
                 Assert.That(await page.IsShippingInformationLabelDisplayedAsync());
                 Assert.That(page.GetShippingInformation(), Is.EqualTo(Constants.SauceShoppingInformation));
-                Assert.That(page.IsPriceTotalLabelDisplayedAsync());
+                Assert.That(page.IsPriceTotalLabelDisplayed());
             });
 
-            var itemTotalValue = page.GetItemTotalValueAsync();
+            var itemTotalValue = page.GetItemTotalValue();
             var productsPricesSum = checkoutOverviewItems.Sum(p => p.ProductPrice);
-            var taxValue = Math.Round(await page.GetTaxValueAsync(), 2);
+            var taxValue = Math.Round(page.GetTaxValue(), 2);
             var taxOverTheSum = Math.Round(productsPricesSum * 0.08, 2);
             var totalValue = page.GetTotalValue();
             var sum = Math.Round(itemTotalValue + taxValue, 2);

@@ -2,7 +2,7 @@
 {
     public interface Constants
     {
-        // login page
+        // login productsPage
         public const string LoginPageHeader = "Swag Labs";
 
         public const string ValidUsername = "standard_user";
@@ -25,7 +25,7 @@
 
         public const string InvalidCredentialsErrorMessage = "Epic sadface: Username and password do not match any user in this service";
 
-        // Products list page
+        // Products list productsPage
         public const string ProductsPageHeader = "Products";
 
         public const string PriceHighToLow = "hilo";
@@ -36,10 +36,10 @@
 
         public const string NameZtoA = "za";
 
-        // Shopping Cart page
+        // Shopping Cart productsPage
         public const string ShoppingCartTitle = "Your Cart";
 
-        // Checkout Information page
+        // Checkout Information productsPage
         public const string CheckoutInformationTitle = "Checkout: Your Information";
 
         public const string CheckoutInformationFirstName = "FName";
@@ -54,14 +54,14 @@
 
         public const string CheckoutInformationZipCodeErrorMessage = "Error: Postal Code is required";
 
-        // Checkput overview page
+        // Checkput overview productsPage
         public const string CheckoutOverviewTitle = "Checkout: Overview";
 
         public const string SauceCard = "SauceCard #31337";
 
         public const string SauceShoppingInformation = "Free Pony Express Delivery!";
 
-        // Checkout complete page
+        // Checkout complete productsPage
         public const string CheckoutCompleteTitle = "Checkout: Complete!";
 
         public const string CompleteMessageHeader = "Thank you for your order!";
@@ -85,6 +85,6 @@
 
         public const string ProductsAreNotSame = "Products are not the same!";
 
-        public const string MissingProduct = "Products is missing!";
+        public const string MissingProducts = "Products are missing!";
     }
 }

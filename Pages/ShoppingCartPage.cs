@@ -47,19 +47,29 @@ namespace SwagLabs_ShoppingCart.Pages
             return cartItems;
         }
 
+        public void ContinueShopping()
+        {
+            ContinueShoppingButton.Click();
+        }
+
         public async Task ContinueShoppingAsync()
         {
             await Task.Run(() =>
             {
-                ContinueShoppingButton.Click();
+                ContinueShopping();
             });
+        }
+
+        public void Checkout()
+        {
+            CheckoutButton.Click();
         }
 
         public async Task CheckoutAsync()
         {
             await Task.Run(() =>
             {
-                CheckoutButton.Click();
+                Checkout();
             });
         }
     }

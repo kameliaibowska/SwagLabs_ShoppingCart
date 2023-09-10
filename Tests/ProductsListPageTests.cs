@@ -24,7 +24,7 @@ namespace SwagLabs_ShoppingCart.Tests
 
             var products = await page.GetProductsCountAsync();
             Assert.That(products, Is.GreaterThan(0),
-                Constants.MissingProduct);
+                Constants.MissingProducts);
 
             var i = 0;
 

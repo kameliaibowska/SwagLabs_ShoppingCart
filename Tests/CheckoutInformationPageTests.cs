@@ -39,27 +39,15 @@ namespace SwagLabs_ShoppingCart.Tests
 
             if (firstName.Length <= 0)
             {
-                Assert.That(await page.CheckoutInformationErrorMessageExistAsync(), Is.True,
-                    Constants.MissingErrorMessage);
-                Assert.That(page.GetCheckoutInformationErrorText(),
-                    Is.EqualTo(Constants.CheckoutInformationFirstNameErrorMessage), 
-                    Constants.IncorectErrorMessage);
+                AssertResults(Constants.CheckoutInformationFirstNameErrorMessage);
             }
             else if (lastName.Length <= 0)
             {
-                Assert.That(await page.CheckoutInformationErrorMessageExistAsync(), Is.True,
-                    Constants.MissingErrorMessage);
-                Assert.That(page.GetCheckoutInformationErrorText(),
-                    Is.EqualTo(Constants.CheckoutInformationLastNameErrorMessage),
-                    Constants.IncorectErrorMessage);
+                AssertResults(Constants.CheckoutInformationLastNameErrorMessage);
             }
             else if (zipCode.Length <= 0)
             {
-                Assert.That(await page.CheckoutInformationErrorMessageExistAsync(), Is.True,
-                    Constants.MissingErrorMessage);
-                Assert.That(page.GetCheckoutInformationErrorText(),
-                    Is.EqualTo(Constants.CheckoutInformationZipCodeErrorMessage),
-                    Constants.IncorectErrorMessage);
+                AssertResults(Constants.CheckoutInformationZipCodeErrorMessage);
             }
             else
             {
@@ -86,6 +74,15 @@ namespace SwagLabs_ShoppingCart.Tests
             Assert.That(page.CheckPageTitle(), 
                 Is.EqualTo(Constants.CheckoutInformationTitle), 
                 Constants.IncorrectPageTitle);
+        }
+
+        private async void AssertResults(string errorMessage)
+        {
+            Assert.That(await page.CheckoutInformationErrorMessageExistAsync(), Is.True,
+                    Constants.MissingErrorMessage);
+            Assert.That(page.GetCheckoutInformationErrorText(),
+                Is.EqualTo(errorMessage),
+                Constants.IncorectErrorMessage);
         }
     }
 }
