@@ -22,7 +22,7 @@ namespace SwagLabs_ShoppingCart.Pages
             return CheckoutOverviewItems.Count();
         }
 
-        public Product GetCheckoutOverviewProductElements(IWebElement element)
+        private Product GetCheckoutOverviewProductElements(IWebElement element)
         {
 
             return genericPage.GetProductElements(element);

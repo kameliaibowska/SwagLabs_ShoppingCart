@@ -52,7 +52,7 @@ namespace SwagLabs_ShoppingCart.Tests
             await productsListPage.AddRemoveProductAsync();
             await productsListPage.SortProductsAsync(Constants.NameZtoA);
 
-            // add first product from the list by name
+            // add second product from the list by name
             await productsListPage.AddRemoveProductAsync();
             await shoppingCartIconPage.GoToShoppingCartAsync();
             await shoppingCartPage.CheckoutAsync();

@@ -85,7 +85,8 @@ namespace SwagLabs_ShoppingCart.Tests
 
                 await shoppingCartIconPage.GoToShoppingCartAsync();
                 await shoppingCartPage.CheckoutAsync();
-                await checkoutInformationPage.FieldOutUserInformationAsync(Constants.CheckoutInformationFirstName,
+                await checkoutInformationPage.FieldOutUserInformationAsync(
+                    Constants.CheckoutInformationFirstName,
                     Constants.CheckoutInformationLastName,
                     Constants.CheckoutInformationZipCode);
                 await checkoutInformationPage.ContinueCheckoutAsync();

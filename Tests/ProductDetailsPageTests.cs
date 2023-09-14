@@ -6,8 +6,8 @@ namespace SwagLabs_ShoppingCart.Tests
     public class ProductDetailsPageTests : BaseTest, Constants
     {
         private ProductsListPage productsListPage;
-        private ProductDetailsPage? page;
-        private Product? selectedProductFromList;
+        private ProductDetailsPage page;
+        private Product selectedProductFromList;
         private ShoppingCartIconPage shoppingCartIconPage;
 
         public ProductDetailsPageTests(string username, string password) : base(username, password)
@@ -27,7 +27,8 @@ namespace SwagLabs_ShoppingCart.Tests
         public void CheckProductDetailsContent()
         {
             var product = page.GetProductElements();
-            Assert.That(product, Is.Not.Null);
+            Assert.That(product, Is.Not.Null,
+                Constants.MissingProducts);
             Assert.Multiple(() =>
             {
                 Assert.That(selectedProductFromList?.ProductTitle, Is.EqualTo(product.ProductTitle));

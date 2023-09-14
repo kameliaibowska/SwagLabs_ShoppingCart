@@ -80,8 +80,7 @@ namespace SwagLabs_ShoppingCart.Tests
         {
             Assert.That(await page.CheckoutInformationErrorMessageExistAsync(), Is.True,
                     Constants.MissingErrorMessage);
-            Assert.That(page.GetCheckoutInformationErrorText(),
-                Is.EqualTo(errorMessage),
+            Assert.That(page.GetCheckoutInformationErrorText(), Is.EqualTo(errorMessage),
                 Constants.IncorectErrorMessage);
         }
     }
