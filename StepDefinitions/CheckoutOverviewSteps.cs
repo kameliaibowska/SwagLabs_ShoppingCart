@@ -8,13 +8,13 @@ namespace SwagLabs_ShoppingCart.StepDefinitions
     [Binding]
     public class CheckoutOverviewSteps : BaseSteps
     {
-        private ProductsListPage? productsPage;
-        private ShoppingCartIconPage? shoppingCartIconPage;
-        private ShoppingCartPage? shoppingCartPage;
-        private CheckoutOverviewPage? checkoutOverviewPage;
-        private CheckoutInformationPage? checkoutInformationPage;
-        private Product? firstSelectedProductFromList;
-        private Product? secondSelectedProductFromList;
+        private ProductsListPage productsPage;
+        private ShoppingCartIconPage shoppingCartIconPage;
+        private ShoppingCartPage shoppingCartPage;
+        private CheckoutOverviewPage checkoutOverviewPage;
+        private CheckoutInformationPage checkoutInformationPage;
+        private Product firstSelectedProductFromList;
+        private Product secondSelectedProductFromList;
 
         [BeforeScenario]
         public void BeforeScenario()

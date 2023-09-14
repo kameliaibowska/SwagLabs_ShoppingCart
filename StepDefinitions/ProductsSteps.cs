@@ -6,7 +6,7 @@ namespace SwagLabs_ShoppingCart.StepDefinitions
     [Binding]
     public class ProductsSteps : BaseSteps
     {
-        private ProductsListPage? productsPage;
+        private ProductsListPage productsPage;
 
         [BeforeScenario]
         public void BeforeScenario()

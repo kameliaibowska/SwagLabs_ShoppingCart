@@ -7,9 +7,9 @@ namespace SwagLabs_ShoppingCart.StepDefinitions
     [Binding]
     public class ProductDetailsSteps : BaseSteps
     {
-        private ProductsListPage? productsPage;
-        private ProductDetailsPage? productDetailsPage;
-        private Product? selectedProductFromList;
+        private ProductsListPage productsPage;
+        private ProductDetailsPage productDetailsPage;
+        private Product selectedProductFromList;
 
         [BeforeScenario]
         public void BeforeScenario()
@@ -44,7 +44,8 @@ namespace SwagLabs_ShoppingCart.StepDefinitions
         public void ThenProductDetailsPageIsLoadedWithCorrectContent()
         {
             var product = productDetailsPage.GetProductElements();
-            Assert.That(product, Is.Not.Null);
+            Assert.That(product, Is.Not.Null,
+                Constants.MissingProducts);
             Assert.Multiple(() =>
             {
                 Assert.That(selectedProductFromList?.ProductTitle, Is.EqualTo(product.ProductTitle));

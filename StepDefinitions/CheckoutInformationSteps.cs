@@ -6,11 +6,11 @@ namespace SwagLabs_ShoppingCart.StepDefinitions
     [Binding]
     public class CheckoutInformationSteps : BaseSteps
     {
-        private ProductsListPage? productsPage;
-        private ShoppingCartIconPage? shoppingCartIconPage;
-        private ShoppingCartPage? shoppingCartPage;
-        private CheckoutOverviewPage? checkoutOverviewPage;
-        private CheckoutInformationPage? checkoutInformationPage;
+        private ProductsListPage productsPage;
+        private ShoppingCartIconPage shoppingCartIconPage;
+        private ShoppingCartPage shoppingCartPage;
+        private CheckoutOverviewPage checkoutOverviewPage;
+        private CheckoutInformationPage checkoutInformationPage;
 
         [BeforeScenario]
         public void BeforeScenario()
@@ -43,7 +43,7 @@ namespace SwagLabs_ShoppingCart.StepDefinitions
             productsPage.AddRemoveProduct();
             productsPage.SortProducts(Constants.NameZtoA);
 
-            // add first product from the list by name
+            // add second product from the list by name
             productsPage.AddRemoveProduct();
             shoppingCartIconPage.GoToShoppingCart();
             shoppingCartPage.Checkout();
