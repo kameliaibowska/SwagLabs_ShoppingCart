@@ -47,7 +47,7 @@ namespace SwagLabs_ShoppingCart.StepDefinitions
             productsPage.AddRemoveProduct();
             firstSelectedProductFromList = productsPage.GetProductListElements();
 
-            // add first product from the list by name
+            // add second product from the list by name
             productsPage.SortProducts(Constants.NameZtoA);
             productsPage.AddRemoveProduct();
             secondSelectedProductFromList = productsPage.GetProductListElements();
